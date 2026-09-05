@@ -1,11 +1,501 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>최이나 · 프로필</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-display: 'Nanum Pen Script', cursive;
+    --font-body: 'Gaegu', sans-serif;
+    --beige-1: #f0eef9;
+    --beige-2: #c5c9e5;
+    --beige-3: #a6a1e1;
+    --cream-bg: #fcfbff;
+    --ink: #383a66;
+    --ink-soft: rgba(56,58,102,0.72);
+    --ultramarine: #383a66;
+    --ultramarine-soft: #a6a1e1;
+    --line: rgba(56,58,102,0.28);
+  }
+
+  * { box-sizing: border-box; }
+
+  h1, h2, h3, p, li, .line-btn, .tag-mark,
+  .footer p, .goal-mark, .email-bubble {
+    display: inline-block;
+    transform: scaleY(1.22);
+    transform-origin: left bottom;
+  }
+
+  body {
+    margin: 0;
+    padding: 56px 20px;
+    background: var(--cream-bg);
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='paper'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch' result='noise'/><feColorMatrix in='noise' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23paper)'/></svg>"),
+      radial-gradient(circle at 15% 10%, rgba(56,58,102,0.08), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(56,58,102,0.07), transparent 45%),
+      repeating-linear-gradient(to bottom, rgba(56,58,102,0.4) 0px, rgba(56,58,102,0.4) 1px, transparent 1px, transparent 32px);
+    background-repeat: repeat, no-repeat, no-repeat, repeat;
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--ink);
+    display: flex;
+    justify-content: center;
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    height: 680px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--beige-1);
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='paper2'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch' result='noise'/><feColorMatrix in='noise' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0'/></filter><rect width='100%25' height='100%25' filter='url(%23paper2)'/></svg>");
+    background-repeat: repeat;
+    border: 1px solid var(--line);
+    padding: 54px 48px 44px;
+    box-shadow: 0 30px 70px -28px rgba(56,58,102,0.30);
+  }
+
+  .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .card::before, .card::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+  }
+  .card::before {
+    top: -1px; left: -1px;
+    border-top: 1px solid var(--ultramarine);
+    border-left: 1px solid var(--ultramarine);
+  }
+  .card::after {
+    bottom: -1px; right: -1px;
+    border-bottom: 1px solid var(--ultramarine);
+    border-right: 1px solid var(--ultramarine);
+  }
+
+  .tag-mark {
+    position: absolute;
+    top: 22px;
+    right: 26px;
+    font-family: var(--font-display);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--ultramarine);
+    border: 1px solid var(--line);
+    padding: 5px 10px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .tag-mark:hover, .tag-mark:focus-visible {
+    background: var(--ultramarine);
+    color: var(--beige-1);
+  }
+
+  .tag-mark svg { flex-shrink: 0; }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-bottom: 8px;
+  }
+
+  .avatar-frame {
+    flex-shrink: 0;
+    width: 90px;
+    height: 90px;
+    background: transparent;
+    border: none;
+    padding: 4px;
+    box-shadow: none;
+  }
+
+  .avatar-frame img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    background: transparent;
+  }
+
+  .name-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  h2 {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  h2 span {
+    color: var(--ultramarine);
+  }
+
+  .divider {
+    position: relative;
+    height: 1px;
+    background: var(--line);
+    margin: 16px 0 28px;
+    overflow: visible;
+  }
+  .divider::before {
+    content: "";
+    position: absolute;
+    left: 0; top: -3px;
+    width: 1px; height: 7px;
+    background: var(--ultramarine);
+  }
+  .divider::after {
+    content: "";
+    position: absolute;
+    right: 0; top: -3px;
+    width: 1px; height: 7px;
+    background: var(--ultramarine);
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--ultramarine);
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  h3 .mark {
+    font-size: 0.9rem;
+    color: var(--ultramarine-soft);
+  }
+
+  section {
+    margin-bottom: 0;
+  }
+
+  p {
+    font-size: 0.98rem;
+    line-height: 2.1;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  li {
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--ultramarine);
+    padding: 6px 14px;
+  }
+
+  .goal-block {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .goal-mark {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--ultramarine);
+    line-height: 1.6;
+    flex-shrink: 0;
+  }
+
+  .footer {
+    margin-top: 36px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .footer p {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+
+  .line-btn {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: var(--ink);
+    background: transparent;
+    text-decoration: none;
+    border: 1px solid var(--ultramarine);
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .line-btn:hover, .line-btn:focus-visible {
+    background: var(--ultramarine);
+    color: var(--beige-1);
+  }
+
+  .line-btn:focus-visible {
+    outline: 2px solid var(--ultramarine);
+    outline-offset: 2px;
+  }
+
+  .contact-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .email-bubble {
+    position: absolute;
+    bottom: calc(100% + 14px);
+    right: 0;
+    background-color: var(--cream-bg);
+    background-image: none;
+    border: 1px solid var(--ultramarine);
+    padding: 10px 16px;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--ink);
+    white-space: nowrap;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(6px) scale(0.96);
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    box-shadow: 0 14px 28px rgba(56,58,102,0.25);
+  }
+
+  .email-bubble::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    width: 10px;
+    height: 10px;
+    background: var(--cream-bg);
+    border-right: 1px solid var(--ultramarine);
+    border-bottom: 1px solid var(--ultramarine);
+    transform: rotate(45deg) translateY(-5px);
+  }
+
+  .email-bubble.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .email-bubble .hint {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.68rem;
+    color: var(--ultramarine-soft);
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 44px 26px 36px; }
+    h1 { font-size: 1.6rem; }
+    .footer { flex-direction: column; align-items: flex-start; }
+    .email-bubble { right: auto; left: 0; }
+    .email-bubble::after { right: auto; left: 20px; }
+  }
+
+  .page-frame {
+    position: fixed;
+    inset: 18px;
+    border: 1px solid rgba(56,58,102,0.32);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .frame-corner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+  }
+  .frame-corner.tl { top: -1px; left: -1px; border-top: 1.5px solid var(--ultramarine); border-left: 1.5px solid var(--ultramarine); }
+  .frame-corner.tr { top: -1px; right: -1px; border-top: 1.5px solid var(--ultramarine); border-right: 1.5px solid var(--ultramarine); }
+  .frame-corner.bl { bottom: -1px; left: -1px; border-bottom: 1.5px solid var(--ultramarine); border-left: 1.5px solid var(--ultramarine); }
+  .frame-corner.br { bottom: -1px; right: -1px; border-bottom: 1.5px solid var(--ultramarine); border-right: 1.5px solid var(--ultramarine); }
+
+  .frame-ticks {
+    position: absolute;
+    opacity: 0.55;
+  }
+  .frame-ticks.top,
+  .frame-ticks.bottom {
+    left: 60px;
+    right: 60px;
+    height: 7px;
+    background-image: repeating-linear-gradient(to right, var(--ultramarine-soft) 0 1px, transparent 1px 40px);
+  }
+  .frame-ticks.top { top: 0; }
+  .frame-ticks.bottom { bottom: 0; }
+
+  .frame-ticks.left,
+  .frame-ticks.right {
+    top: 60px;
+    bottom: 60px;
+    width: 7px;
+    background-image: repeating-linear-gradient(to bottom, var(--ultramarine-soft) 0 1px, transparent 1px 40px);
+  }
+  .frame-ticks.left { left: 0; }
+  .frame-ticks.right { right: 0; }
+
+  .card { z-index: 1; }
+</style>
 </head>
 <body>
-    
+
+  <div class="page-frame">
+    <span class="frame-corner tl"></span>
+    <span class="frame-corner tr"></span>
+    <span class="frame-corner bl"></span>
+    <span class="frame-corner br"></span>
+    <span class="frame-ticks top"></span>
+    <span class="frame-ticks bottom"></span>
+    <span class="frame-ticks left"></span>
+    <span class="frame-ticks right"></span>
+  </div>
+
+  <div class="card">
+    <a class="tag-mark" href="https://github.com/ENA0712" target="_blank" rel="noopener">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+      </svg>
+      ENA0712
+    </a>
+
+    <div class="header">
+      <div class="avatar-frame">
+        <img
+          src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='moonGrad2' x1='15%25' y1='5%25' x2='95%25' y2='95%25'><stop offset='0%25' stop-color='%23a6a1e1'/><stop offset='100%25' stop-color='%23383a66'/></linearGradient><radialGradient id='glow2' cx='50%25' cy='50%25' r='60%25'><stop offset='0%25' stop-color='%23c5c9e5' stop-opacity='0.3'/><stop offset='100%25' stop-color='%23c5c9e5' stop-opacity='0'/></radialGradient></defs><circle cx='100' cy='100' r='96' fill='url(%23glow2)'/><path d='M104,20 A80,80 0 1,0 104,180 A56,56 0 0,1 104,20 Z' fill='url(%23moonGrad2)'/><circle cx='82' cy='68' r='6' fill='%23a6a1e1' opacity='0.5'/><circle cx='68' cy='104' r='4.5' fill='%23a6a1e1' opacity='0.45'/><circle cx='88' cy='134' r='5.5' fill='%23a6a1e1' opacity='0.5'/><g fill='%23383a66'><path d='M148,34 L151,43 160,46 151,49 148,58 145,49 136,46 145,43 Z'/><path d='M166,80 L168,86 174,88 168,90 166,96 164,90 158,88 164,86 Z'/><path d='M42,146 L44,152 50,154 44,156 42,162 40,156 34,154 40,152 Z'/><path d='M56,44 L57,48 61,49 57,50 56,54 55,50 51,49 55,48 Z'/></g></svg>"
+          alt="라벤더 톤의 초승달과 반짝이는 별을 그린 손그림 스타일 로고">
+      </div>
+      <div>
+        <div class="name-row">
+          <h1>최이나</h1>
+        </div>
+        <h2>학번 <span>22500738</span> / AI컴퓨터심화 전공</h2>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="card-body">
+      <section>
+        <h3><span class="mark">＋</span> 관심 분야</h3>
+        <ul>
+          <li>예술</li>
+          <li>음악</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3><span class="mark">＋</span> 취미</h3>
+        <ul>
+          <li>드로잉</li>
+          <li>음악 감상</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3><span class="mark">＋</span> 이번 학기 목표</h3>
+        <div class="goal-block">
+          <p>전공 수업 안에서 다양한 개발 경험을 쌓아보고 싶습니다. 새로운 도구와 방식으로 직접 만들어보면서 배우는 것을 목표로 하고 있습니다.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">
+      <p>AI컴퓨터심화 · 2026</p>
+      <div class="contact-wrap">
+        <button type="button" class="line-btn" onclick="toggleEmailBubble(this)">메일</button>
+        <div class="email-bubble" onclick="copyEmail(this)">
+          22500738@handong.ac.kr
+          <span class="hint">클릭하면 복사돼요</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleEmailBubble(btn) {
+      const bubble = btn.parentElement.querySelector('.email-bubble');
+      const willShow = !bubble.classList.contains('visible');
+      document.querySelectorAll('.email-bubble.visible').forEach(function (b) {
+        b.classList.remove('visible');
+      });
+      if (willShow) bubble.classList.add('visible');
+    }
+
+    function copyEmail(bubble) {
+      const email = '22500738@handong.ac.kr';
+      const hint = bubble.querySelector('.hint');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(email).catch(function () {});
+      }
+      if (hint) {
+        const original = hint.textContent;
+        hint.textContent = '복사됨!';
+        setTimeout(function () {
+          hint.textContent = original;
+        }, 1200);
+      }
+    }
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.contact-wrap')) {
+        document.querySelectorAll('.email-bubble.visible').forEach(function (b) {
+          b.classList.remove('visible');
+        });
+      }
+    });
+  </script>
 </body>
 </html>
